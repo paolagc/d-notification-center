@@ -12,6 +12,14 @@ function notification_center_admin_settings() {
     '#options' => $node_types,
   );
 
+
+  $flags = flag_get_flags();
+  $form['notification_center_flags'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Select the flags that triggers notifications'),
+    '#options' => $flags,
+  );
+
   $form['#submit'][] = 'notification_center_admin_settings_submit';
   return system_settings_form($form);
 }
