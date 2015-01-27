@@ -8,7 +8,18 @@ function notification_center_entity_info() {
     'notification' => array(
 	      'label' => t('Notification'),
 	      'base table' => 'com_notification',
+        'entity class' => 'Entity',
+        'controller class' => 'EntityAPIController',
+        'views controller class' => 'EntityDefaultViewsController',
 	      'fieldable' => TRUE,
+        'bundles' => array(
+          'notification' => array(
+            'label' => t('Notifications'),
+            'admin' => array(
+              'path' => 'admin/notificatis',
+            ),
+          ),
+        ),
 	      'entity keys' => array(
 	        'id' => 'ntid',
 	      ),
@@ -91,7 +102,12 @@ function notification_center_notify($notification){
  * Implements hook_views_api().
  */
 function notification_center_views_api($module = NULL, $api = NULL) {
-  return array("api" => "3.0");
+  $module_path = drupal_get_path('module', 'notification_center');  
+  return array(
+    'path' => $module_path,
+    'template path' => $module_path . '/template',
+    'api' => '3.0'
+    );
 }
 
 function notification_center_theme_registry_alter(&$theme_registry) {
