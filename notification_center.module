@@ -15,9 +15,6 @@ function notification_center_entity_info() {
         'bundles' => array(
           'notification' => array(
             'label' => t('Notifications'),
-            'admin' => array(
-              'path' => 'admin/notifications',
-            ),
           ),
         ),
 	      'entity keys' => array(
@@ -133,6 +130,22 @@ function notification_center_views_api($module = NULL, $api = NULL) {
     'template path' => $module_path . '/templates',
     'api' => '3.0'
     );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function notification_center_menu() {
+  $items['admin/config/notifications'] = array(
+    'title'            => 'Notification settings',
+    'description'      => 'Configure notification center settings.',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('notification_center_admin_settings'),
+    'file'             => 'notification_center.admin.inc',
+    'access callback' => TRUE,
+    'type'             => MENU_NORMAL_ITEM,
+  );
+  return $items;
 }
 
 function notification_center_theme_registry_alter(&$theme_registry) {

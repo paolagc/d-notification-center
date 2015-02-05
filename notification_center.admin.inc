@@ -1,19 +1,25 @@
 <?php
 
+
+/**
+ * @file
+ * Administration menu callbacks for Notification center
+ */
+
 function notification_center_admin_settings() {
   $form = array();
 
   $node_types = node_type_get_names();
   $form['notification_center_link_node_types'] = array(
     '#type' => 'checkboxes',
-    '#title' => t('Display link on the selected content types'),
+    '#title' => t('Select the content types that triggers notifications'),
     '#description' => t('Select which content types could generate user notifications.'),
-    '#default_value' => variable_get('privatemsg_link_node_types', array()),
     '#options' => $node_types,
   );
 
 
-  $flags = flag_get_flags();
+  $flags = _flag_get_flag_names();
+  dpm($flags);
   $form['notification_center_flags'] = array(
     '#type' => 'checkboxes',
     '#title' => t('Select the flags that triggers notifications'),
