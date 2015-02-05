@@ -16,7 +16,7 @@ function notification_center_entity_info() {
           'notification' => array(
             'label' => t('Notifications'),
             'admin' => array(
-              'path' => 'admin/notificatis',
+              'path' => 'admin/notifications',
             ),
           ),
         ),
@@ -66,7 +66,7 @@ function notification_center_entity_property_info() {
   $info['notification']['properties']['date'] = array(
     'label' => t('Date'),
     'description' => t('Trigger date action.'),
-    'type' => 'integer',
+    'type' => 'date',
     'schema field' => 'date',
   );
 
@@ -86,11 +86,36 @@ function notification_center_entity_property_info() {
 
   $info['notification']['properties']['otype'] = array(
     'label' => t('Receiving object type'),
-    'description' => t('User who receives the notification.'),
+    'description' => t('Type of the object receiving.'),
     'type' => 'text',
     'schema field' => 'otype',
   );
+
+  $info['notification_status']['properties']['ntid'] = array(
+    'label' => t('Notification ID'),
+    'description' => t('Notification ID.'),
+    'type' => 'integer',
+    'schema field' => 'ntid',
+  );
+
+  $info['notification_status']['properties']['status'] = array(
+    'label' => t('Notification status'),
+    'description' => t('Notification status.'),
+    'type' => 'text',
+    'schema field' => 'status',
+  );
+
   return $info;
+}
+
+/**
+* Implements hook_entity_property_info_alter().
+*/
+function notification_center_entity_property_info_alter(&$info) {
+
+    $info['notification']['properties']['ulid']['type'] = 'user';
+    $info['notification']['properties']['urid']['type'] = 'user';
+    $info['notification']['properties']['oid']['type'] = 'node';
 }
 
 function notification_center_notify($notification){
@@ -105,7 +130,7 @@ function notification_center_views_api($module = NULL, $api = NULL) {
   $module_path = drupal_get_path('module', 'notification_center');  
   return array(
     'path' => $module_path,
-    'template path' => $module_path . '/template',
+    'template path' => $module_path . '/templates',
     'api' => '3.0'
     );
 }

@@ -4,7 +4,6 @@
  * Implements hook_schema().
  */
 function notification_center_schema() {
-  dpm('notification_center_schema');
 
   $schema = array();
 
